@@ -1,0 +1,52 @@
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dateHeader {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  padding: 0 var(--space-2);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-16) 0;
+  text-align: center;
+}
+
+.empty span {
+  font-size: 3rem;
+  opacity: 0.35;
+}
+
+.empty p {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.emptyHint {
+  font-size: var(--font-size-sm) !important;
+  color: var(--text-tertiary) !important;
+}

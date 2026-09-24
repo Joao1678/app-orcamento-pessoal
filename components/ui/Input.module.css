@@ -1,0 +1,116 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  background: var(--surface-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.input::placeholder {
+  color: transparent;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+  background: var(--surface-card);
+}
+
+/* Float label */
+.label {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-md);
+  transition:
+    top var(--transition-fast),
+    font-size var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+  pointer-events: none;
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: var(--space-2);
+  transform: translateY(0);
+  font-size: var(--font-size-xs);
+  color: var(--color-primary-light);
+}
+
+/* Com ícone de prefixo */
+.hasPrefixIcon {
+  padding-left: calc(var(--space-4) + 24px + var(--space-2));
+}
+
+.hasPrefixIcon ~ .label {
+  left: calc(var(--space-4) + 24px + var(--space-2));
+}
+
+/* Com ícone de sufixo */
+.hasSuffixIcon {
+  padding-right: calc(var(--space-4) + 24px + var(--space-2));
+}
+
+.prefixIcon,
+.suffixIcon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.prefixIcon {
+  left: var(--space-4);
+}
+
+.suffixIcon {
+  right: var(--space-4);
+}
+
+/* Estado de erro */
+.hasError .input {
+  border-color: var(--color-expense);
+}
+
+.hasError .input:focus {
+  box-shadow: 0 0 0 3px var(--color-expense-bg);
+}
+
+.hasError .label {
+  color: var(--color-expense-light) !important;
+}
+
+.error {
+  font-size: var(--font-size-xs);
+  color: var(--color-expense-light);
+}
+
+.hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}

@@ -1,0 +1,76 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1200px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pageTitle {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.pageSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  text-transform: capitalize;
+}
+
+/* Grade de cards de stats */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+/* Grade de gráficos */
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: var(--space-6);
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-5);
+}
+
+.chartLegend {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-xs);
+}
+
+.legendIncome  { color: var(--color-income-light); }
+.legendExpense { color: var(--color-expense-light); }
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .pageTitle {
+    font-size: var(--font-size-2xl);
+  }
+}
