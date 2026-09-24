@@ -14,11 +14,19 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+    setSuccess('')
+
+    const normalizedEmail = email.trim().toLowerCase()
+    if (!normalizedEmail) {
+      setError('Informe seu e-mail.')
+      return
+    }
 
     if (password.length < 6) {
       setError('A senha deve ter pelo menos 6 caracteres.')
@@ -27,18 +35,33 @@ export default function RegisterPage() {
 
     setLoading(true)
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: fullName } },
-    })
 
-    if (error) {
-      setError(error.message || 'Erro ao criar conta. Tente novamente.')
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: normalizedEmail,
+        password,
+        options: {
+          data: { full_name: fullName },
+          emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+        },
+      })
+
+      if (error) {
+        setError(error.message || 'Erro ao criar conta. Tente novamente.')
+        return
+      }
+
+      if (data.session) {
+        router.push('/')
+        router.refresh()
+        return
+      }
+
+      setSuccess('Conta criada! Verifique seu e-mail para confirmar o acesso.')
+    } catch {
+      setError('Não foi possível conectar ao Supabase. Tente novamente.')
+    } finally {
       setLoading(false)
-    } else {
-      router.push('/')
-      router.refresh()
     }
   }
 
@@ -107,6 +130,7 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="new-password"
+             showPasswordToggle
             hint="Mínimo de 6 caracteres"
             prefixIcon={
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -124,6 +148,16 @@ export default function RegisterPage() {
                 <line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
               {error}
+            </div>
+          )}
+
+          {success && (
+            <div className={styles.successBanner} role="status">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m8 12 2.5 2.5L16 9"/>
+              </svg>
+              {success}
             </div>
           )}
 

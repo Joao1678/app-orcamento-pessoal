@@ -18,17 +18,40 @@ export default function LoginPage() {
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+
+    const normalizedEmail = email.trim().toLowerCase()
+    if (!normalizedEmail) {
+      setError('Informe seu e-mail.')
+      return
+    }
+
     setLoading(true)
-
     const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-    if (error) {
-      setError('E-mail ou senha incorretos. Tente novamente.')
-      setLoading(false)
-    } else {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: normalizedEmail,
+        password,
+      })
+
+      if (error) {
+        const message = error.message.toLowerCase()
+        if (message.includes('email not confirmed')) {
+          setError('Confirme seu e-mail antes de fazer login.')
+        } else if (message.includes('invalid login credentials')) {
+          setError('E-mail ou senha incorretos. Tente novamente.')
+        } else {
+          setError(error.message || 'Não foi possível fazer login.')
+        }
+        return
+      }
+
       router.push('/')
       router.refresh()
+    } catch {
+      setError('Não foi possível conectar ao Supabase. Tente novamente.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -81,6 +104,7 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
+             showPasswordToggle
             prefixIcon={
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>

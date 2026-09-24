@@ -84,6 +84,37 @@
   z-index: 1;
 }
 
+.passwordToggle {
+  position: absolute;
+  right: var(--space-2);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.passwordToggle:hover,
+.passwordToggle:focus-visible {
+  background: var(--surface-overlay);
+  color: var(--text-primary);
+}
+
+.passwordToggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
 .prefixIcon {
   left: var(--space-4);
 }
