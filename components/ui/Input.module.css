@@ -12,7 +12,9 @@
 
 .input {
   width: 100%;
-  padding: var(--space-4) var(--space-4) var(--space-2);
+  /* O padding-superior reserva a faixa que o label ocupa ao flutuar.
+     Reduzi-lo aqui fazia o label_small sobrepor o texto digitado. */
+  padding: calc(var(--space-5) + var(--space-1)) var(--space-4) var(--space-2);
   background: var(--surface-input);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -40,23 +42,29 @@
 .label {
   position: absolute;
   left: var(--space-4);
-  top: 50%;
-  transform: translateY(-50%);
+  /* Ancorado na mesma borda superior do texto (mesmo padding e
+     line-height), então fica exatamente alinhado quando em repouso.
+     Centralizar na caixa deslocaria o label ao aumentar o padding. */
+  top: calc(var(--space-5) + var(--space-1));
   color: var(--text-tertiary);
   font-size: var(--font-size-md);
+  line-height: 1.6;
   transition:
     top var(--transition-fast),
     font-size var(--transition-fast),
     color var(--transition-fast),
-    transform var(--transition-fast);
+    line-height var(--transition-fast);
   pointer-events: none;
 }
 
+/* Com texto digitado (ou campo focado) o label sobe e encolhe, ficando
+   acima do texto em vez de sobre ele. O line-height: 1 evita que a caixa
+   do label_small se expanda e desça de novo até o texto. */
 .input:focus ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  top: var(--space-2);
-  transform: translateY(0);
+  top: 6px;
   font-size: var(--font-size-xs);
+  line-height: 1;
   color: var(--color-primary-light);
 }
 
@@ -133,9 +141,9 @@
 
 .input:disabled ~ .label {
   color: var(--text-tertiary);
-  top: var(--space-2);
-  transform: translateY(0);
+  top: 6px;
   font-size: var(--font-size-xs);
+  line-height: 1;
 }
 
 /* Estado de erro */
