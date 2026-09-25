@@ -1,0 +1,73 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.blockTitle {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+  list-style: disc;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.list strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.exportRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-top: var(--space-1);
+}
+
+.exportHint {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  flex: 1;
+  min-width: 200px;
+}
+
+.ok {
+  font-size: var(--font-size-sm);
+  color: var(--color-income-light);
+  background: var(--color-income-bg);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+.error {
+  font-size: var(--font-size-sm);
+  color: var(--color-expense-light);
+  background: var(--color-expense-bg);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+}

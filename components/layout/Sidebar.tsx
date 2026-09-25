@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { Avatar } from '@/components/ui/Avatar'
+import type { AvatarView } from '@/lib/avatar'
 import styles from './Sidebar.module.css'
 
 const navItems = [
@@ -43,17 +45,16 @@ const navItems = [
 interface SidebarProps {
   userEmail?: string
   userName?: string
+  avatar?: AvatarView
 }
 
-export function Sidebar({ userEmail, userName }: SidebarProps) {
+export function Sidebar({ userEmail, userName, avatar }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)
 
-  const initials = userName
-    ? userName.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
-    : userEmail?.[0]?.toUpperCase() ?? 'U'
+  const isSettingsActive = pathname === '/settings'
 
   async function handleLogout() {
     setLoggingOut(true)
@@ -96,13 +97,39 @@ export function Sidebar({ userEmail, userName }: SidebarProps) {
 
       {/* Usuário e Logout */}
       <div className={styles.footer}>
-        <div className={styles.user}>
-          <div className={styles.avatar}>{initials}</div>
+        <Link
+          href="/settings"
+          className={`${styles.user} ${isSettingsActive ? styles.userActive : ''}`}
+          onClick={() => setMobileOpen(false)}
+          aria-label="Abrir configurações da conta"
+        >
+          <Avatar
+            emoji={avatar?.emoji}
+            color={avatar?.color ?? undefined}
+            name={userName}
+            email={userEmail}
+            size={36}
+            className={styles.avatar}
+          />
           <div className={styles.userInfo}>
             <p className={styles.userName}>{userName || 'Usuário'}</p>
             <p className={styles.userEmail}>{userEmail}</p>
           </div>
-        </div>
+          <svg
+            className={styles.userChevron}
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </Link>
         <button
           className={styles.logoutBtn}
           onClick={handleLogout}

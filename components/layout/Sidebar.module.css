@@ -108,20 +108,44 @@
   gap: var(--space-3);
   flex: 1;
   min-width: 0;
+  padding: var(--space-1);
+  margin: calc(var(--space-1) * -1);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.user:hover {
+  background: var(--surface-overlay);
+}
+
+.user:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
+.userActive {
+  background: rgba(124, 58, 237, 0.15);
+}
+
+.userActive:hover {
+  background: rgba(124, 58, 237, 0.22);
+}
+
+.userChevron {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.user:hover .userChevron,
+.user:focus-visible .userChevron,
+.userActive .userChevron {
+  opacity: 1;
 }
 
 .avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  color: white;
-  flex-shrink: 0;
+  border: 1px solid var(--border-medium);
 }
 
 .userInfo {

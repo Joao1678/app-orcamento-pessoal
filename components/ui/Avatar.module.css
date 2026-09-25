@@ -1,0 +1,20 @@
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.preset {
+  line-height: 1;
+}
+
+.initials {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}

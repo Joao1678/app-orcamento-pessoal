@@ -1,0 +1,96 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 820px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.pageTitle {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.pageSubtitle {
+  margin-top: var(--space-1);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.sectionHint {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-5);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.dangerCard {
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-md);
+  background: var(--color-expense-bg);
+  color: var(--color-expense-light);
+  font-size: var(--font-size-sm);
+}
+
+.errorBanner svg {
+  flex-shrink: 0;
+}
+
+.loading {
+  display: flex;
+  min-height: 200px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-medium);
+  border-top-color: var(--color-primary-light);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .pageHeader {
+    flex-direction: column;
+  }
+}

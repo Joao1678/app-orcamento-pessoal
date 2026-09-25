@@ -11,6 +11,7 @@ export function useCategories(type?: TransactionType) {
 
   const fetch = useCallback(async () => {
     setLoading(true)
+    setError(null)
     const supabase = createClient()
     let query = supabase.from('categories').select('*').order('name')
     if (type) query = query.eq('type', type)

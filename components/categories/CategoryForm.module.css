@@ -1,0 +1,172 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Toggle tipo */
+.typeToggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  background: var(--surface-input);
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+}
+
+.typeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-tertiary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.typeBtn:hover {
+  color: var(--text-primary);
+}
+
+.activeExpense {
+  background: var(--color-expense-bg);
+  color: var(--color-expense-light);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.activeIncome {
+  background: var(--color-income-bg);
+  color: var(--color-income-light);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Campos */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Grade de ícones */
+.iconGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-2);
+}
+
+.iconOption {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--surface-input);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.iconOption:hover {
+  border-color: var(--cat-color, var(--color-primary));
+  background: var(--surface-card-hover);
+}
+
+.iconActive {
+  border-color: var(--cat-color, var(--color-primary));
+  background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 18%, transparent);
+}
+
+/* Grade de cores */
+.colorGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.colorOption {
+  width: 32px;
+  height: 32px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.colorOption:hover {
+  transform: scale(1.1);
+}
+
+.colorActive {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 2px var(--surface-input);
+}
+
+/* Pré-visualização */
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.previewLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.previewItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-md);
+  background: var(--surface-input);
+}
+
+.previewIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.previewName {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Ações */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+
+.error {
+  font-size: var(--font-size-sm);
+  color: var(--color-expense-light);
+  background: var(--color-expense-bg);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+}

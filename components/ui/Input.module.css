@@ -123,6 +123,21 @@
   right: var(--space-4);
 }
 
+/* Estado desabilitado — campo somente leitura, sem aparência de editável */
+.input:disabled {
+  background: var(--surface-overlay);
+  border-color: var(--border-subtle);
+  color: var(--text-tertiary);
+  cursor: not-allowed;
+}
+
+.input:disabled ~ .label {
+  color: var(--text-tertiary);
+  top: var(--space-2);
+  transform: translateY(0);
+  font-size: var(--font-size-xs);
+}
+
 /* Estado de erro */
 .hasError .input {
   border-color: var(--color-expense);

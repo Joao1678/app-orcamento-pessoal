@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Sidebar } from '@/components/layout/Sidebar'
+import { resolveAvatarView } from '@/lib/avatar'
 import styles from './layout.module.css'
 
 export default async function DashboardLayout({
@@ -15,7 +16,7 @@ export default async function DashboardLayout({
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('full_name')
+    .select('full_name, avatar_url')
     .eq('id', user.id)
     .single()
 
@@ -24,6 +25,7 @@ export default async function DashboardLayout({
       <Sidebar
         userEmail={user.email}
         userName={profile?.full_name ?? undefined}
+        avatar={resolveAvatarView(profile?.avatar_url)}
       />
       <main className={styles.main}>
         {children}
