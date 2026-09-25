@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { friendlyErrorMessage } from '@/lib/supabase/errors'
 import type { Transaction } from '@/types/database'
 import { getCurrentMonthRange } from '@/lib/utils/dateUtils'
 
@@ -44,7 +45,7 @@ export function useTransactions(options: UseTransactionsOptions = {}) {
 
     const { data, error } = await query
 
-    if (error) setError(error.message)
+    if (error) setError(friendlyErrorMessage(error, 'Não foi possível carregar as transações.'))
     else setTransactions(data as Transaction[])
     setLoading(false)
   }, [options.month, options.type, options.categoryId, options.limit])

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { Profile } from '@/types/database'
+import { friendlyErrorMessage } from '@/lib/supabase/errors'
 import { buildPresetRef, resolveAvatarView, EMPTY_AVATAR, type AvatarView } from '@/lib/avatar'
 
 export type { AvatarView }
@@ -38,7 +39,10 @@ export function useProfile() {
     if (profileError) {
       setLoading(false)
       setError(
-        'Não foi possível carregar seu perfil. Verifique se as migrations foram aplicadas no Supabase.'
+        friendlyErrorMessage(
+          profileError,
+          'Não foi possível carregar seu perfil. Verifique se as migrations foram aplicadas no Supabase.'
+        )
       )
       return
     }

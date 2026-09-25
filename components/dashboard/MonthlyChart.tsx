@@ -25,6 +25,22 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
   )
 }
 
+/**
+ * Rótulo compacto do eixo. `notation: 'compact'` do Intl resolve o
+ * abbreviado respeitando o locale — antes o código concatenava "R$" na mão,
+ * o que ignorava o pt-BR e ainda exibia "1500" em vez de "1.500".
+ */
+const axisFormatter = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+  notation: 'compact',
+  maximumFractionDigits: 1,
+})
+
+function formatAxisValue(value: number): string {
+  return axisFormatter.format(value)
+}
+
 export function MonthlyChart({ data }: MonthlyChartProps) {
   return (
     <ResponsiveContainer width="100%" height={220}>
@@ -44,7 +60,7 @@ export function MonthlyChart({ data }: MonthlyChartProps) {
           tick={{ fill: 'var(--text-tertiary)', fontSize: 12 }}
           axisLine={false}
           tickLine={false}
-          tickFormatter={(v) => `R$${(v / 1000).toFixed(0)}k`}
+          tickFormatter={formatAxisValue}
           width={50}
         />
         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />

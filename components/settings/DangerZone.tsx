@@ -9,21 +9,57 @@ import styles from './DangerZone.module.css'
 
 const CONFIRM_WORD = 'EXCLUIR'
 
+/**
+ * Quantas confirmações explícitas o usuário precisa dar antes da conta ser
+ * removida. A regra de segurança do projeto exige três etapas: primeiro o
+ * usuário pide ver a área de perigo, depois confirma a intenção, e só então
+ * destrava o botão destrutivo. Vale notar que a remoção é irreversível —
+ * não há como desfazer, e o botão some depois.
+ */
+const CONFIRMATION_STEPS = 3
+
 interface DangerZoneProps {
   email: string | null
   counts: { categories: number; transactions: number } | null
+  /** Usado para sugerir a alternativa não destrutiva antes da exclusão. */
+  onExport: () => Promise<void>
 }
 
-export function DangerZone({ email, counts }: DangerZoneProps) {
+type Step = 'idle' | 'review' | 'confirm' | 'armed'
+
+export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
   const router = useRouter()
-  const [revealed, setRevealed] = useState(false)
+  const [step, setStep] = useState<Step>('idle')
   const [password, setPassword] = useState('')
   const [confirmation, setConfirmation] = useState('')
   const [busy, setBusy] = useState(false)
+  const [exported, setExported] = useState(false)
+  const [exporting, setExporting] = useState(false)
   const [error, setError] = useState('')
 
   const confirmMatches = confirmation.trim().toUpperCase() === CONFIRM_WORD
-  const canDelete = confirmMatches && password.length > 0 && !busy
+  const canDelete = step === 'armed' && confirmMatches && password.length > 0 && !busy
+
+  function reset() {
+    setStep('idle')
+    setConfirmation('')
+    setPassword('')
+    setError('')
+  }
+
+  async function handleExport() {
+    setExporting(true)
+    try {
+      await onExport()
+      setExported(true)
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : 'Não foi possível exportar seus dados.'
+      )
+    } finally {
+      setExporting(false)
+    }
+  }
 
   async function handleDelete() {
     setBusy(true)
@@ -63,7 +99,10 @@ export function DangerZone({ email, counts }: DangerZoneProps) {
     }
   }
 
-  if (!revealed) {
+  const stepNumber =
+    step === 'review' ? 1 : step === 'confirm' ? 2 : step === 'armed' ? 3 : 0
+
+  if (step === 'idle') {
     return (
       <div className={styles.collapsed}>
         <div>
@@ -72,7 +111,7 @@ export function DangerZone({ email, counts }: DangerZoneProps) {
             Apaga a conta e todos os dados associados. Esta ação não pode ser desfeita.
           </p>
         </div>
-        <Button type="button" variant="danger" onClick={() => setRevealed(true)}>
+        <Button type="button" variant="danger" onClick={() => setStep('review')}>
           Excluir minha conta
         </Button>
       </div>
@@ -96,66 +135,164 @@ export function DangerZone({ email, counts }: DangerZoneProps) {
         </div>
       </div>
 
-      <p className={styles.text}>Serão removidos:</p>
-      <ul className={styles.list}>
-        <li>Sua conta e o acesso ao aplicativo.</li>
-        <li>
-          {counts
-            ? `Suas ${counts.transactions} transação(ões) e ${counts.categories} categoria(s).`
-            : 'Suas transações e categorias.'}
-        </li>
-        <li>Seu avatar, nome e e-mail cadastrados.</li>
-      </ul>
+      {/* Indicador das três etapas */}
+      <ol className={styles.steps} aria-label={`Etapa ${stepNumber} de ${CONFIRMATION_STEPS}`}>
+        {Array.from({ length: CONFIRMATION_STEPS }, (_, i) => {
+          const current = stepNumber
+          const state = i + 1 < current ? 'done' : i + 1 === current ? 'current' : 'pending'
+          return (
+            <li
+              key={i}
+              className={styles.stepItem}
+              data-state={state}
+              aria-current={state === 'current' ? 'step' : undefined}
+            >
+              <span className={styles.stepDot}>{i + 1}</span>
+              <span className={styles.stepLabel}>
+                {i === 0
+                  ? 'Entender o impacto'
+                  : i === 1
+                    ? 'Confirmar a intenção'
+                    : 'Desbloquear exclusão'}
+              </span>
+            </li>
+          )
+        })}
+      </ol>
 
-      <div className={styles.confirmBlock}>
-        <Input
-          label="Digite sua senha para confirmar"
-          type="password"
-          id="delete-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          showPasswordToggle
-          autoComplete="current-password"
-        />
+      {/* Etapa 1 — impacto + alternativa não destrutiva */}
+      {step === 'review' && (
+        <>
+          <div>
+            <p className={styles.text}>Serão removidos:</p>
+            <ul className={styles.list}>
+              <li>Sua conta e o acesso ao aplicativo.</li>
+              <li>
+                {counts
+                  ? `Suas ${counts.transactions} transação(ões) e ${counts.categories} categoria(s).`
+                  : 'Suas transações e categorias.'}
+              </li>
+              <li>Seu avatar, nome e e-mail cadastrados.</li>
+            </ul>
+          </div>
 
-        <Input
-          label={`Digite ${CONFIRM_WORD} para confirmar`}
-          type="text"
-          id="delete-confirm-word"
-          value={confirmation}
-          onChange={(e) => setConfirmation(e.target.value)}
-          placeholder={CONFIRM_WORD}
-          autoComplete="off"
-        />
-      </div>
+          <div className={styles.alternative}>
+            <p className={styles.alternativeTitle}>
+              Antes de continuar, considere manter uma cópia
+            </p>
+            <p className={styles.alternativeText}>
+              A exclusão não tem como ser desfeita. Se você só quer uma cópia
+              do que registrou, baixar os dados resolve e não afeta nada na
+              sua conta.
+            </p>
+            <div className={styles.alternativeActions}>
+              <Button
+                type="button"
+                variant="secondary"
+                loading={exporting}
+                onClick={handleExport}
+              >
+                {exported ? 'Baixar novamente' : 'Baixar meus dados (JSON)'}
+              </Button>
+              {exported && (
+                <span className={styles.alternativeDone} role="status">
+                  Cópia gerada neste dispositivo.
+                </span>
+              )}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Etapa 2 — intenção */}
+      {step === 'confirm' && (
+        <div className={styles.confirmBlock}>
+          <p className={styles.text}>
+            Confirme que entende: a conta será removida e o acesso perdido.
+          </p>
+          <Button
+            type="button"
+            variant="danger"
+            fullWidth
+            onClick={() => setStep('armed')}
+          >
+            Entendo, quero excluir mesmo assim
+          </Button>
+        </div>
+      )}
+
+      {/* Etapa 3 — credenciais */}
+      {step === 'armed' && (
+        <div className={styles.confirmBlock}>
+          <p className={styles.text}>
+            Última etapa: informe sua senha e digite <strong>{CONFIRM_WORD}</strong> para
+            concluir.
+          </p>
+          <Input
+            label="Digite sua senha para confirmar"
+            type="password"
+            id="delete-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            showPasswordToggle
+            autoComplete="current-password"
+          />
+
+          <Input
+            label={`Digite ${CONFIRM_WORD} para confirmar`}
+            type="text"
+            id="delete-confirm-word"
+            value={confirmation}
+            onChange={(e) => setConfirmation(e.target.value)}
+            placeholder={CONFIRM_WORD}
+            autoComplete="off"
+          />
+        </div>
+      )}
 
       {error && (
         <p className={styles.error} role="alert">{error}</p>
       )}
 
       <div className={styles.actions}>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => {
-            setRevealed(false)
-            setConfirmation('')
-            setPassword('')
-            setError('')
-          }}
-          disabled={busy}
-        >
-          Cancelar
-        </Button>
-        <Button
-          type="button"
-          variant="danger"
-          loading={busy}
-          disabled={!canDelete}
-          onClick={handleDelete}
-        >
-          Excluir conta e todos os dados
-        </Button>
+        {step === 'review' && (
+          <Button type="button" variant="ghost" onClick={reset} disabled={busy}>
+            Cancelar
+          </Button>
+        )}
+
+        {step === 'confirm' && (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => setStep('review')}
+            disabled={busy}
+          >
+            Voltar
+          </Button>
+        )}
+
+        {step === 'armed' && (
+          <>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setStep('confirm')}
+              disabled={busy}
+            >
+              Voltar
+            </Button>
+            <Button
+              type="button"
+              variant="danger"
+              loading={busy}
+              disabled={!canDelete}
+              onClick={handleDelete}
+            >
+              Excluir conta e todos os dados
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )

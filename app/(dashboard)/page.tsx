@@ -4,7 +4,12 @@ import { SpendingChart } from '@/components/dashboard/SpendingChart'
 import { MonthlyChart } from '@/components/dashboard/MonthlyChart'
 import { RecentTransactions } from '@/components/dashboard/RecentTransactions'
 import { Card } from '@/components/ui/Card'
-import type { CategorySpending, MonthlyChartData, Transaction } from '@/types/database'
+import type { Transaction } from '@/types/database'
+import {
+  summarizePeriod,
+  summarizeByCategory,
+  projectMonthlyTotals,
+} from '@/lib/finance/calculate'
 import { getCurrentMonthRange, getLastSixMonths } from '@/lib/utils/dateUtils'
 import styles from './page.module.css'
 
@@ -26,23 +31,10 @@ export default async function DashboardPage() {
 
   const txList = (transactions ?? []) as Transaction[]
 
-  // Stats do mês
-  const income  = txList.filter(t => t.type === 'income').reduce((s, t) => s + Number(t.amount), 0)
-  const expense = txList.filter(t => t.type === 'expense').reduce((s, t) => s + Number(t.amount), 0)
-  const balance = income - expense
-
-  // Gastos por categoria
-  const expenseTxs = txList.filter(t => t.type === 'expense' && t.category)
-  const catMap = new Map<string, CategorySpending>()
-  for (const tx of expenseTxs) {
-    const cat = tx.category!
-    const existing = catMap.get(cat.id)
-    if (existing) existing.total += Number(tx.amount)
-    else catMap.set(cat.id, { category: cat, total: Number(tx.amount), percentage: 0 })
-  }
-  const categorySpending: CategorySpending[] = Array.from(catMap.values())
-    .sort((a, b) => b.total - a.total)
-    .map(item => ({ ...item, percentage: expense > 0 ? (item.total / expense) * 100 : 0 }))
+  // Toda a aritmética de dinheiro vive em lib/finance/calculate.ts, que usa
+  // Decimal e tem testes unitários. Aqui só orquestramos a chamada.
+  const { income, expense, balance, transactionCount } = summarizePeriod(txList)
+  const categorySpending = summarizeByCategory(txList)
 
   // Gráfico mensal — últimos 6 meses
   const months = getLastSixMonths()
@@ -53,14 +45,10 @@ export default async function DashboardPage() {
     .gte('date', months[0].start)
     .lte('date', months[months.length - 1].end)
 
-  const monthlyData: MonthlyChartData[] = months.map(m => {
-    const mTx = (allTx ?? []).filter(t => t.date >= m.start && t.date <= m.end)
-    return {
-      month: m.label,
-      income:  mTx.filter(t => t.type === 'income').reduce((s, t) => s + Number(t.amount), 0),
-      expense: mTx.filter(t => t.type === 'expense').reduce((s, t) => s + Number(t.amount), 0),
-    }
-  })
+  const monthlyData = projectMonthlyTotals(
+    (allTx ?? []) as { amount: number; type: 'income' | 'expense'; date: string }[],
+    months
+  )
 
   const now = new Date()
   const monthName = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(now)
@@ -113,7 +101,7 @@ export default async function DashboardPage() {
         />
         <BalanceCard
           title="Transações"
-          value={txList.length}
+          value={transactionCount}
           variant="count"
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

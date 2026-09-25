@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { friendlyErrorMessage } from '@/lib/supabase/errors'
 import type { Category, TransactionType } from '@/types/database'
 
 export function useCategories(type?: TransactionType) {
@@ -16,7 +17,7 @@ export function useCategories(type?: TransactionType) {
     let query = supabase.from('categories').select('*').order('name')
     if (type) query = query.eq('type', type)
     const { data, error } = await query
-    if (error) setError(error.message)
+    if (error) setError(friendlyErrorMessage(error, 'Não foi possível carregar as categorias.'))
     else setCategories(data as Category[])
     setLoading(false)
   }, [type])

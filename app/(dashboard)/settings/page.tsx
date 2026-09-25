@@ -143,7 +143,7 @@ export default function SettingsPage() {
           <Card padding="lg" className={styles.dangerCard}>
             <h2 className={styles.sectionTitle}>Zona de perigo</h2>
             <div className={styles.stack}>
-              <DangerZone email={email} counts={counts} />
+              <DangerZone email={email} counts={counts} onExport={exportData} />
             </div>
           </Card>
         </>
