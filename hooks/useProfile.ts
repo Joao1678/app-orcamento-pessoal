@@ -41,8 +41,8 @@ export function useProfile() {
       setError(
         friendlyErrorMessage(
           profileError,
-          'Não foi possível carregar seu perfil. Verifique se as migrations foram aplicadas no Supabase.'
-        )
+          'Não foi possível carregar seu perfil. Verifique se as migrations foram aplicadas no Supabase.',
+        ),
       )
       return
     }
@@ -54,7 +54,9 @@ export function useProfile() {
     setLoading(false)
   }, [])
 
-  useEffect(() => { fetch() }, [fetch])
+  useEffect(() => {
+    fetch()
+  }, [fetch])
 
   /**
    * Mantém `profiles` e os metadados do Auth alinhados. O app lê o nome de
@@ -132,8 +134,7 @@ export function useProfile() {
       supabase.from('transactions').select('*').order('date', { ascending: false }),
     ])
 
-    const firstError =
-      profileRes.error ?? categoriesRes.error ?? transactionsRes.error
+    const firstError = profileRes.error ?? categoriesRes.error ?? transactionsRes.error
     if (firstError) throw new Error(firstError.message)
 
     const payload = {
@@ -177,19 +178,13 @@ export function useProfile() {
   }
 }
 
-async function writeAvatarRef(
-  supabase: ReturnType<typeof createClient>,
-  value: string | null
-) {
+async function writeAvatarRef(supabase: ReturnType<typeof createClient>, value: string | null) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) throw new Error('Sessão expirada. Entre novamente.')
 
-  const { error } = await supabase
-    .from('profiles')
-    .update({ avatar_url: value })
-    .eq('id', user.id)
+  const { error } = await supabase.from('profiles').update({ avatar_url: value }).eq('id', user.id)
 
   if (error) throw new Error(error.message)
 }

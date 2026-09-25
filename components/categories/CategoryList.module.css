@@ -18,8 +18,12 @@
   padding: 0 var(--space-2);
 }
 
-.groupHeader[data-type="income"]  { color: var(--color-income-light); }
-.groupHeader[data-type="expense"] { color: var(--color-expense-light); }
+.groupHeader[data-type='income'] {
+  color: var(--color-income-light);
+}
+.groupHeader[data-type='expense'] {
+  color: var(--color-expense-light);
+}
 
 .list {
   display: grid;

@@ -29,7 +29,9 @@ export function Card({
     hover ? styles.hover : '',
     onClick ? styles.clickable : '',
     className,
-  ].filter(Boolean).join(' ')
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <div

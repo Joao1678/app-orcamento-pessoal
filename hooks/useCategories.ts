@@ -22,18 +22,25 @@ export function useCategories(type?: TransactionType) {
     setLoading(false)
   }, [type])
 
-  useEffect(() => { fetch() }, [fetch])
+  useEffect(() => {
+    fetch()
+  }, [fetch])
 
   async function createCategory(payload: Omit<Category, 'id' | 'user_id' | 'created_at'>) {
     const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
     if (!user) throw new Error('Não autenticado')
     const { error } = await supabase.from('categories').insert({ ...payload, user_id: user.id })
     if (error) throw error
     await fetch()
   }
 
-  async function updateCategory(id: string, payload: Partial<Omit<Category, 'id' | 'user_id' | 'created_at'>>) {
+  async function updateCategory(
+    id: string,
+    payload: Partial<Omit<Category, 'id' | 'user_id' | 'created_at'>>,
+  ) {
     const supabase = createClient()
     const { error } = await supabase.from('categories').update(payload).eq('id', id)
     if (error) throw error
@@ -57,5 +64,13 @@ export function useCategories(type?: TransactionType) {
     await fetch()
   }
 
-  return { categories, loading, error, refetch: fetch, createCategory, updateCategory, deleteCategory }
+  return {
+    categories,
+    loading,
+    error,
+    refetch: fetch,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+  }
 }

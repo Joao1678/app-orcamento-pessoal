@@ -77,12 +77,20 @@
   width: 100%;
 }
 
-.amountInput::placeholder { color: var(--border-medium); }
+.amountInput::placeholder {
+  color: var(--border-medium);
+}
 .amountInput::-webkit-inner-spin-button,
-.amountInput::-webkit-outer-spin-button { -webkit-appearance: none; }
+.amountInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
 
-.amountExpense { color: var(--color-expense-light); }
-.amountIncome  { color: var(--color-income-light); }
+.amountExpense {
+  color: var(--color-expense-light);
+}
+.amountIncome {
+  color: var(--color-income-light);
+}
 
 /* Campo genérico */
 .field {

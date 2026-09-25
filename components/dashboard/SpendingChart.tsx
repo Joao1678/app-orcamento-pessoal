@@ -1,6 +1,6 @@
 'use client'
 
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts'
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import type { CategorySpending } from '@/types/database'
 import { formatCurrency } from '@/lib/utils/formatCurrency'
 import styles from './SpendingChart.module.css'
@@ -9,14 +9,22 @@ interface SpendingChartProps {
   data: CategorySpending[]
 }
 
-function CustomTooltip({ active, payload }: { active?: boolean; payload?: { payload: CategorySpending }[] }) {
+function CustomTooltip({
+  active,
+  payload,
+}: {
+  active?: boolean
+  payload?: { payload: CategorySpending }[]
+}) {
   if (!active || !payload?.length) return null
   const item = payload[0].payload
   return (
     <div className={styles.tooltip}>
       <span className={styles.tooltipDot} style={{ background: item.category.color }} />
       <div>
-        <p className={styles.tooltipLabel}>{item.category.icon} {item.category.name}</p>
+        <p className={styles.tooltipLabel}>
+          {item.category.icon} {item.category.name}
+        </p>
         <p className={styles.tooltipValue}>{formatCurrency(item.total)}</p>
         <p className={styles.tooltipPct}>{item.percentage.toFixed(1)}%</p>
       </div>
@@ -60,7 +68,9 @@ export function SpendingChart({ data }: SpendingChartProps) {
         {data.slice(0, 6).map((item) => (
           <div key={item.category.id} className={styles.legendItem}>
             <span className={styles.legendDot} style={{ background: item.category.color }} />
-            <span className={styles.legendName}>{item.category.icon} {item.category.name}</span>
+            <span className={styles.legendName}>
+              {item.category.icon} {item.category.name}
+            </span>
             <span className={styles.legendPct}>{item.percentage.toFixed(0)}%</span>
           </div>
         ))}

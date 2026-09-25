@@ -14,9 +14,7 @@ export function createAdminClient() {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
   if (!url || !serviceRoleKey) {
-    throw new Error(
-      'SUPABASE_SERVICE_ROLE_KEY não configurada. Adicione a chave em .env.local.'
-    )
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY não configurada. Adicione a chave em .env.local.')
   }
 
   return createClient(url, serviceRoleKey, {

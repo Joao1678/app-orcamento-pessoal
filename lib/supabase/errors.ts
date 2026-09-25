@@ -18,13 +18,10 @@ interface SupabaseLikeError {
 /** códigos que o GoTrue/PostgREST usam para sessão e permissão. */
 const UNAUTHENTICATED_CODES = new Set([
   'PGRST301', // token expirou / ausente no header
-  '42501',    // sem privilégio (RLS)
+  '42501', // sem privilégio (RLS)
 ])
 
-const FORBIDDEN_CODES = new Set([
-  '42501',
-  'PGRST301',
-])
+const FORBIDDEN_CODES = new Set(['42501', 'PGRST301'])
 
 function statusOf(error: SupabaseLikeError | null | undefined): number | null {
   if (!error) return null
@@ -34,9 +31,7 @@ function statusOf(error: SupabaseLikeError | null | undefined): number | null {
   return match ? Number(match[1]) : null
 }
 
-export function classifyError(
-  error: SupabaseLikeError | null | undefined
-): AuthErrorKind {
+export function classifyError(error: SupabaseLikeError | null | undefined): AuthErrorKind {
   if (!error) return 'unknown'
 
   const status = statusOf(error)
@@ -54,7 +49,7 @@ export function classifyError(
 /** Mensagem pronta para exibir, conforme a causa. */
 export function friendlyErrorMessage(
   error: SupabaseLikeError | null | undefined,
-  fallback = 'Não foi possível concluir a operação. Tente novamente.'
+  fallback = 'Não foi possível concluir a operação. Tente novamente.',
 ): string {
   switch (classifyError(error)) {
     case 'unauthenticated':

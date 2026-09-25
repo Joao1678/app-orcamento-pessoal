@@ -6,7 +6,9 @@
   border-radius: var(--radius-md);
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
   animation: fadeIn 0.3s ease both;
 }
 
@@ -52,7 +54,9 @@
   content: '·';
   margin-left: var(--space-2);
 }
-.meta span:last-child::after { content: ''; }
+.meta span:last-child::after {
+  content: '';
+}
 
 .right {
   display: flex;
@@ -66,8 +70,12 @@
   font-size: var(--font-size-sm);
   font-weight: 700;
 }
-.amount[data-type="income"]  { color: var(--color-income-light); }
-.amount[data-type="expense"] { color: var(--color-expense-light); }
+.amount[data-type='income'] {
+  color: var(--color-income-light);
+}
+.amount[data-type='expense'] {
+  color: var(--color-expense-light);
+}
 
 .actions {
   display: flex;
@@ -115,9 +123,27 @@
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin    { to { transform: rotate(360deg); } }
-@keyframes fadeIn  { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
-  50%       { box-shadow: 0 0 0 4px transparent; }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px transparent;
+  }
 }

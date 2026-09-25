@@ -69,15 +69,20 @@ export default function SettingsPage() {
       <header className={styles.pageHeader}>
         <div>
           <h1 className={styles.pageTitle}>Configurações da conta</h1>
-          <p className={styles.pageSubtitle}>
-            Gerencie seus dados, sua foto e sua privacidade
-          </p>
+          <p className={styles.pageSubtitle}>Gerencie seus dados, sua foto e sua privacidade</p>
         </div>
       </header>
 
       {error && (
         <div className={styles.errorBanner} role="alert">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <circle cx="12" cy="12" r="10" />
             <line x1="12" y1="8" x2="12" y2="12" />
             <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -98,8 +103,8 @@ export default function SettingsPage() {
           <Card padding="lg">
             <h2 className={styles.sectionTitle}>Informações da conta</h2>
             <p className={styles.sectionHint}>
-              Seu nome aparece no menu lateral. O e-mail é a identidade da sua
-              conta e não pode ser duplicado.
+              Seu nome aparece no menu lateral. O e-mail é a identidade da sua conta e não pode ser
+              duplicado.
             </p>
             <div className={styles.stack}>
               <ProfileInfo
@@ -116,9 +121,7 @@ export default function SettingsPage() {
 
           <Card padding="lg">
             <h2 className={styles.sectionTitle}>Avatar do perfil</h2>
-            <p className={styles.sectionHint}>
-              Escolha como você aparece no menu lateral.
-            </p>
+            <p className={styles.sectionHint}>Escolha como você aparece no menu lateral.</p>
             <div className={styles.stack}>
               <AvatarPicker
                 avatar={avatar}

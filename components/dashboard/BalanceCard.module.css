@@ -5,7 +5,9 @@
   padding: var(--space-6);
   border: 1px solid var(--border-subtle);
   animation: fadeIn 0.5s ease both;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .card:hover {
@@ -18,25 +20,33 @@
   border-color: rgba(124, 58, 237, 0.25);
   box-shadow: 0 4px 24px rgba(124, 58, 237, 0.12);
 }
-.balance:hover { box-shadow: var(--shadow-primary); }
+.balance:hover {
+  box-shadow: var(--shadow-primary);
+}
 
 .income {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.04));
   border-color: rgba(16, 185, 129, 0.2);
 }
-.income:hover { box-shadow: var(--shadow-income); }
+.income:hover {
+  box-shadow: var(--shadow-income);
+}
 
 .expense {
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.04));
   border-color: rgba(239, 68, 68, 0.2);
 }
-.expense:hover { box-shadow: var(--shadow-expense); }
+.expense:hover {
+  box-shadow: var(--shadow-expense);
+}
 
 .count {
   background: var(--surface-card);
   border-color: var(--border-subtle);
 }
-.count:hover { box-shadow: var(--shadow-md); }
+.count:hover {
+  box-shadow: var(--shadow-md);
+}
 
 /* Header */
 .header {
@@ -56,10 +66,22 @@
   flex-shrink: 0;
 }
 
-.balance .iconWrapper { background: rgba(124, 58, 237, 0.2); color: var(--color-primary-light); }
-.income .iconWrapper  { background: var(--color-income-bg); color: var(--color-income); }
-.expense .iconWrapper { background: var(--color-expense-bg); color: var(--color-expense-light); }
-.count .iconWrapper   { background: var(--surface-overlay); color: var(--text-secondary); }
+.balance .iconWrapper {
+  background: rgba(124, 58, 237, 0.2);
+  color: var(--color-primary-light);
+}
+.income .iconWrapper {
+  background: var(--color-income-bg);
+  color: var(--color-income);
+}
+.expense .iconWrapper {
+  background: var(--color-expense-bg);
+  color: var(--color-expense-light);
+}
+.count .iconWrapper {
+  background: var(--surface-overlay);
+  color: var(--text-secondary);
+}
 
 .title {
   font-size: var(--font-size-sm);
@@ -78,9 +100,15 @@
   letter-spacing: -0.02em;
 }
 
-.balance .value { color: var(--color-primary-light); }
-.income  .value { color: var(--color-income-light); }
-.expense .value { color: var(--color-expense-light); }
+.balance .value {
+  color: var(--color-primary-light);
+}
+.income .value {
+  color: var(--color-income-light);
+}
+.expense .value {
+  color: var(--color-expense-light);
+}
 
 .subtitle {
   margin-top: var(--space-2);
@@ -100,12 +128,26 @@
   opacity: 0.15;
 }
 
-.balance .glow  { background: var(--color-primary); }
-.income  .glow  { background: var(--color-income); }
-.expense .glow  { background: var(--color-expense); }
-.count   .glow  { display: none; }
+.balance .glow {
+  background: var(--color-primary);
+}
+.income .glow {
+  background: var(--color-income);
+}
+.expense .glow {
+  background: var(--color-expense);
+}
+.count .glow {
+  display: none;
+}
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

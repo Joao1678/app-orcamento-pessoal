@@ -12,9 +12,7 @@ interface BalanceCardProps {
 }
 
 export function BalanceCard({ title, value, variant, icon, subtitle }: BalanceCardProps) {
-  const displayValue = variant === 'count'
-    ? value.toString()
-    : formatCurrency(value)
+  const displayValue = variant === 'count' ? value.toString() : formatCurrency(value)
 
   return (
     <div className={`${styles.card} ${styles[variant]}`}>

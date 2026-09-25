@@ -33,9 +33,7 @@ export function getLastSixMonths(): { label: string; start: string; end: string 
     const start = new Date(date.getFullYear(), date.getMonth(), 1)
     const end = new Date(date.getFullYear(), date.getMonth() + 1, 0)
     months.push({
-      label: new Intl.DateTimeFormat('pt-BR', { month: 'short' })
-        .format(start)
-        .replace('.', ''),
+      label: new Intl.DateTimeFormat('pt-BR', { month: 'short' }).format(start).replace('.', ''),
       start: start.toISOString().split('T')[0],
       end: end.toISOString().split('T')[0],
     })

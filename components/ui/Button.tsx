@@ -34,24 +34,16 @@ export function Button({
     fullWidth ? styles.fullWidth : '',
     loading ? styles.loading : '',
     className,
-  ].filter(Boolean).join(' ')
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
-    <button
-      className={classes}
-      disabled={disabled || loading}
-      {...props}
-    >
-      {loading && (
-        <span className={styles.spinner} aria-hidden="true" />
-      )}
-      {!loading && icon && iconPosition === 'left' && (
-        <span className={styles.icon}>{icon}</span>
-      )}
+    <button className={classes} disabled={disabled || loading} {...props}>
+      {loading && <span className={styles.spinner} aria-hidden="true" />}
+      {!loading && icon && iconPosition === 'left' && <span className={styles.icon}>{icon}</span>}
       {children && <span>{children}</span>}
-      {!loading && icon && iconPosition === 'right' && (
-        <span className={styles.icon}>{icon}</span>
-      )}
+      {!loading && icon && iconPosition === 'right' && <span className={styles.icon}>{icon}</span>}
     </button>
   )
 }

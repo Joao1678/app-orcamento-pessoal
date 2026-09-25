@@ -19,7 +19,9 @@
   border-radius: var(--radius-md);
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .item:hover {
@@ -64,8 +66,12 @@
   flex-shrink: 0;
 }
 
-.amount[data-type="income"]  { color: var(--color-income-light); }
-.amount[data-type="expense"] { color: var(--color-expense-light); }
+.amount[data-type='income'] {
+  color: var(--color-income-light);
+}
+.amount[data-type='expense'] {
+  color: var(--color-expense-light);
+}
 
 .viewAll {
   display: inline-flex;
@@ -76,7 +82,9 @@
   transition: color var(--transition-fast);
 }
 
-.viewAll:hover { color: var(--color-primary); }
+.viewAll:hover {
+  color: var(--color-primary);
+}
 
 .empty {
   display: flex;

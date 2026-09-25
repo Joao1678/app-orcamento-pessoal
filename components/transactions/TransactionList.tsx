@@ -48,7 +48,7 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
           <div key={date} className={styles.group}>
             <p className={styles.dateHeader}>{formatDate(date)}</p>
             <ul className={styles.list}>
-              {txs.map(tx => (
+              {txs.map((tx) => (
                 <TransactionItem
                   key={tx.id}
                   transaction={tx}
@@ -61,11 +61,7 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
         ))}
       </div>
 
-      <Modal
-        isOpen={!!editingTx}
-        onClose={() => setEditingTx(null)}
-        title="Editar Transação"
-      >
+      <Modal isOpen={!!editingTx} onClose={() => setEditingTx(null)} title="Editar Transação">
         {editingTx && (
           <TransactionForm
             categories={categories}

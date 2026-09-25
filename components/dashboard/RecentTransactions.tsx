@@ -27,7 +27,11 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
           <li key={tx.id} className={styles.item}>
             <div
               className={styles.categoryIcon}
-              style={{ background: tx.category?.color ? `${tx.category.color}20` : 'var(--surface-overlay)' }}
+              style={{
+                background: tx.category?.color
+                  ? `${tx.category.color}20`
+                  : 'var(--surface-overlay)',
+              }}
             >
               <span>{tx.category?.icon ?? '💰'}</span>
             </div>
@@ -39,10 +43,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                 {tx.category?.name} · {formatDate(tx.date)}
               </p>
             </div>
-            <span
-              className={styles.amount}
-              data-type={tx.type}
-            >
+            <span className={styles.amount} data-type={tx.type}>
               {tx.type === 'income' ? '+' : '-'}
               {formatCurrency(tx.amount)}
             </span>

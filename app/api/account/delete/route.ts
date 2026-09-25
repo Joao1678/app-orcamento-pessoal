@@ -24,7 +24,7 @@ export async function DELETE() {
   if (authError || !user) {
     return NextResponse.json(
       { error: 'Sessão inválida ou expirada. Entre novamente e tente de novo.' },
-      { status: 401 }
+      { status: 401 },
     )
   }
 
@@ -35,7 +35,7 @@ export async function DELETE() {
     // Falha de configuração, não do usuário: 500 é apropriado.
     return NextResponse.json(
       { error: 'Exclusão de conta indisponível neste ambiente (falta configuração no servidor).' },
-      { status: 500 }
+      { status: 500 },
     )
   }
 
@@ -44,7 +44,7 @@ export async function DELETE() {
   if (deleteError) {
     return NextResponse.json(
       { error: `Não foi possível excluir a conta: ${deleteError.message}` },
-      { status: 500 }
+      { status: 500 },
     )
   }
 

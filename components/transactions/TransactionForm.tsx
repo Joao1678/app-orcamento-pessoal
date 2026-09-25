@@ -23,7 +23,7 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const filteredCategories = categories.filter(c => c.type === type)
+  const filteredCategories = categories.filter((c) => c.type === type)
 
   // Reset categoria quando tipo muda
   useEffect(() => {
@@ -65,8 +65,15 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
           onClick={() => setType('expense')}
           id="type-expense"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
           </svg>
           Despesa
         </button>
@@ -76,8 +83,15 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
           onClick={() => setType('income')}
           id="type-income"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
           </svg>
           Receita
         </button>
@@ -93,7 +107,7 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
           min="0.01"
           placeholder="0,00"
           value={amount}
-          onChange={e => setAmount(e.target.value)}
+          onChange={(e) => setAmount(e.target.value)}
           className={`${styles.amountInput} ${type === 'income' ? styles.amountIncome : styles.amountExpense}`}
           required
         />
@@ -101,9 +115,11 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
 
       {/* Categoria */}
       <div className={styles.field}>
-        <label className={styles.label} htmlFor="transaction-category">Categoria</label>
+        <label className={styles.label} htmlFor="transaction-category">
+          Categoria
+        </label>
         <div className={styles.categoryGrid}>
-          {filteredCategories.map(cat => (
+          {filteredCategories.map((cat) => (
             <button
               key={cat.id}
               type="button"
@@ -124,7 +140,7 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
         type="text"
         id="transaction-description"
         value={description}
-        onChange={e => setDescription(e.target.value)}
+        onChange={(e) => setDescription(e.target.value)}
       />
 
       {/* Data */}
@@ -133,12 +149,14 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
         type="date"
         id="transaction-date"
         value={date}
-        onChange={e => setDate(e.target.value)}
+        onChange={(e) => setDate(e.target.value)}
         required
       />
 
       {error && (
-        <p className={styles.error} role="alert">{error}</p>
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
       )}
 
       <div className={styles.actions}>

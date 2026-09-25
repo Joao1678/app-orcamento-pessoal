@@ -31,18 +31,18 @@ export interface AvatarView {
 export const EMPTY_AVATAR: AvatarView = { emoji: null, color: null }
 
 export const AVATAR_PRESETS: AvatarPreset[] = [
-  { id: 'astronaut',  emoji: '👨‍🚀', label: 'Astronauta', color: '#7C3AED' },
-  { id: 'wizard',     emoji: '🧙', label: 'Mago',       color: '#3B82F6' },
-  { id: 'ninja',      emoji: '🥷', label: 'Ninja',      color: '#111120' },
-  { id: 'cat',        emoji: '🐱', label: 'Gato',       color: '#F59E0B' },
-  { id: 'dog',        emoji: '🐶', label: 'Cachorro',   color: '#10B981' },
-  { id: 'fox',        emoji: '🦊', label: 'Raposa',     color: '#EF4444' },
-  { id: 'panda',      emoji: '🐼', label: 'Panda',      color: '#6B7280' },
-  { id: 'unicorn',    emoji: '🦄', label: 'Unicórnio',  color: '#EC4899' },
-  { id: 'alien',      emoji: '👽', label: 'Alien',      color: '#06B6D4' },
-  { id: 'ghost',      emoji: '👻', label: 'Fantasma',   color: '#8B5CF6' },
-  { id: 'robot',      emoji: '🤖', label: 'Robô',       color: '#3B82F6' },
-  { id: 'crown',      emoji: '👑', label: 'Coroa',      color: '#F59E0B' },
+  { id: 'astronaut', emoji: '👨‍🚀', label: 'Astronauta', color: '#7C3AED' },
+  { id: 'wizard', emoji: '🧙', label: 'Mago', color: '#3B82F6' },
+  { id: 'ninja', emoji: '🥷', label: 'Ninja', color: '#111120' },
+  { id: 'cat', emoji: '🐱', label: 'Gato', color: '#F59E0B' },
+  { id: 'dog', emoji: '🐶', label: 'Cachorro', color: '#10B981' },
+  { id: 'fox', emoji: '🦊', label: 'Raposa', color: '#EF4444' },
+  { id: 'panda', emoji: '🐼', label: 'Panda', color: '#6B7280' },
+  { id: 'unicorn', emoji: '🦄', label: 'Unicórnio', color: '#EC4899' },
+  { id: 'alien', emoji: '👽', label: 'Alien', color: '#06B6D4' },
+  { id: 'ghost', emoji: '👻', label: 'Fantasma', color: '#8B5CF6' },
+  { id: 'robot', emoji: '🤖', label: 'Robô', color: '#3B82F6' },
+  { id: 'crown', emoji: '👑', label: 'Coroa', color: '#F59E0B' },
 ]
 
 export function buildPresetRef(id: string): string {

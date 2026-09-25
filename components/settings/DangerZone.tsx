@@ -53,9 +53,7 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
       await onExport()
       setExported(true)
     } catch (err: unknown) {
-      setError(
-        err instanceof Error ? err.message : 'Não foi possível exportar seus dados.'
-      )
+      setError(err instanceof Error ? err.message : 'Não foi possível exportar seus dados.')
     } finally {
       setExporting(false)
     }
@@ -99,8 +97,7 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
     }
   }
 
-  const stepNumber =
-    step === 'review' ? 1 : step === 'confirm' ? 2 : step === 'armed' ? 3 : 0
+  const stepNumber = step === 'review' ? 1 : step === 'confirm' ? 2 : step === 'armed' ? 3 : 0
 
   if (step === 'idle') {
     return (
@@ -121,16 +118,22 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
   return (
     <div className={styles.panel}>
       <div className={styles.warning} role="alert">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-          <line x1="12" y1="9" x2="12" y2="13"/>
-          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
         </svg>
         <div>
           <p className={styles.warningTitle}>Isto apagará seus dados definitivamente</p>
           <p className={styles.warningText}>
-            Sem cópia de segurança, sem como reverter. A exclusão é imediata e
-            permanente.
+            Sem cópia de segurança, sem como reverter. A exclusão é imediata e permanente.
           </p>
         </div>
       </div>
@@ -181,17 +184,11 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
               Antes de continuar, considere manter uma cópia
             </p>
             <p className={styles.alternativeText}>
-              A exclusão não tem como ser desfeita. Se você só quer uma cópia
-              do que registrou, baixar os dados resolve e não afeta nada na
-              sua conta.
+              A exclusão não tem como ser desfeita. Se você só quer uma cópia do que registrou,
+              baixar os dados resolve e não afeta nada na sua conta.
             </p>
             <div className={styles.alternativeActions}>
-              <Button
-                type="button"
-                variant="secondary"
-                loading={exporting}
-                onClick={handleExport}
-              >
+              <Button type="button" variant="secondary" loading={exporting} onClick={handleExport}>
                 {exported ? 'Baixar novamente' : 'Baixar meus dados (JSON)'}
               </Button>
               {exported && (
@@ -210,12 +207,7 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
           <p className={styles.text}>
             Confirme que entende: a conta será removida e o acesso perdido.
           </p>
-          <Button
-            type="button"
-            variant="danger"
-            fullWidth
-            onClick={() => setStep('armed')}
-          >
+          <Button type="button" variant="danger" fullWidth onClick={() => setStep('armed')}>
             Entendo, quero excluir mesmo assim
           </Button>
         </div>
@@ -225,8 +217,7 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
       {step === 'armed' && (
         <div className={styles.confirmBlock}>
           <p className={styles.text}>
-            Última etapa: informe sua senha e digite <strong>{CONFIRM_WORD}</strong> para
-            concluir.
+            Última etapa: informe sua senha e digite <strong>{CONFIRM_WORD}</strong> para concluir.
           </p>
           <Input
             label="Digite sua senha para confirmar"
@@ -251,7 +242,9 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
       )}
 
       {error && (
-        <p className={styles.error} role="alert">{error}</p>
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
       )}
 
       <div className={styles.actions}>
@@ -262,12 +255,7 @@ export function DangerZone({ email, counts, onExport }: DangerZoneProps) {
         )}
 
         {step === 'confirm' && (
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => setStep('review')}
-            disabled={busy}
-          >
+          <Button type="button" variant="ghost" onClick={() => setStep('review')} disabled={busy}>
             Voltar
           </Button>
         )}

@@ -5,11 +5,7 @@ import { MonthlyChart } from '@/components/dashboard/MonthlyChart'
 import { RecentTransactions } from '@/components/dashboard/RecentTransactions'
 import { Card } from '@/components/ui/Card'
 import type { Transaction } from '@/types/database'
-import {
-  summarizePeriod,
-  summarizeByCategory,
-  projectMonthlyTotals,
-} from '@/lib/finance/calculate'
+import { summarizePeriod, summarizeByCategory, projectMonthlyTotals } from '@/lib/finance/calculate'
 import { getCurrentMonthRange, getLastSixMonths } from '@/lib/utils/dateUtils'
 import styles from './page.module.css'
 
@@ -17,7 +13,9 @@ export const dynamic = 'force-dynamic'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   const { start, end } = getCurrentMonthRange()
 
   // Buscar transações do mês
@@ -47,7 +45,7 @@ export default async function DashboardPage() {
 
   const monthlyData = projectMonthlyTotals(
     (allTx ?? []) as { amount: number; type: 'income' | 'expense'; date: string }[],
-    months
+    months,
   )
 
   const now = new Date()
@@ -69,10 +67,17 @@ export default async function DashboardPage() {
           value={balance}
           variant="balance"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="16"/>
-              <line x1="8" y1="12" x2="16" y2="12"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="16" />
+              <line x1="8" y1="12" x2="16" y2="12" />
             </svg>
           }
           subtitle="Receitas menos despesas"
@@ -82,9 +87,16 @@ export default async function DashboardPage() {
           value={income}
           variant="income"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-              <polyline points="17 6 23 6 23 12"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+              <polyline points="17 6 23 6 23 12" />
             </svg>
           }
         />
@@ -93,9 +105,16 @@ export default async function DashboardPage() {
           value={expense}
           variant="expense"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
-              <polyline points="17 18 23 18 23 12"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+              <polyline points="17 18 23 18 23 12" />
             </svg>
           }
         />
@@ -104,13 +123,20 @@ export default async function DashboardPage() {
           value={transactionCount}
           variant="count"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="8" y1="6" x2="21" y2="6"/>
-              <line x1="8" y1="12" x2="21" y2="12"/>
-              <line x1="8" y1="18" x2="21" y2="18"/>
-              <line x1="3" y1="6" x2="3.01" y2="6"/>
-              <line x1="3" y1="12" x2="3.01" y2="12"/>
-              <line x1="3" y1="18" x2="3.01" y2="18"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" />
             </svg>
           }
           subtitle="neste mês"

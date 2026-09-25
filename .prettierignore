@@ -1,0 +1,16 @@
+.next/
+node_modules/
+out/
+build/
+package-lock.json
+
+# Config gerada pelo create-next-app: usa aspas duplas e ponto e vírgula,
+# estilo diferente do restante do app. Mantemos como vieram.
+eslint.config.mjs
+next.config.ts
+
+# O bloco nextjs-agent-rules é comparado byte a byte por
+# node_modules/next/dist/server/lib/generate-agent-files.js. O Prettier
+# remove as crases do texto inline, quebrando essa comparação e fazendo o
+# next dev reescrever o arquivo a cada execução.
+AGENTS.md

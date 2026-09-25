@@ -9,14 +9,36 @@ import styles from './CategoryForm.module.css'
 export type CategoryDraft = Omit<Category, 'id' | 'user_id' | 'created_at'>
 
 const COLOR_OPTIONS = [
-  '#7C3AED', '#EF4444', '#F59E0B', '#10B981',
-  '#3B82F6', '#EC4899', '#06B6D4', '#8B5CF6', '#6B7280',
+  '#7C3AED',
+  '#EF4444',
+  '#F59E0B',
+  '#10B981',
+  '#3B82F6',
+  '#EC4899',
+  '#06B6D4',
+  '#8B5CF6',
+  '#6B7280',
 ]
 
 const ICON_OPTIONS = [
-  '💰', '🏠', '🍔', '🚗', '💊', '🎮',
-  '📚', '👕', '📦', '💼', '💻', '📈',
-  '✈️', '🎁', '☕', '🐾', '⚽', '💪',
+  '💰',
+  '🏠',
+  '🍔',
+  '🚗',
+  '💊',
+  '🎮',
+  '📚',
+  '👕',
+  '📦',
+  '💼',
+  '💻',
+  '📈',
+  '✈️',
+  '🎁',
+  '☕',
+  '🐾',
+  '⚽',
+  '💪',
 ]
 
 interface CategoryFormProps {
@@ -62,8 +84,15 @@ export function CategoryForm({ initial, onSubmit, onCancel }: CategoryFormProps)
           onClick={() => setType('expense')}
           aria-pressed={type === 'expense'}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
           </svg>
           Despesa
         </button>
@@ -73,8 +102,15 @@ export function CategoryForm({ initial, onSubmit, onCancel }: CategoryFormProps)
           onClick={() => setType('income')}
           aria-pressed={type === 'income'}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
           </svg>
           Receita
         </button>
@@ -86,16 +122,18 @@ export function CategoryForm({ initial, onSubmit, onCancel }: CategoryFormProps)
         type="text"
         id="category-name"
         value={name}
-        onChange={e => setName(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
         maxLength={40}
         required
       />
 
       {/* Ícone */}
       <div className={styles.field}>
-        <span className={styles.label} id="category-icon-label">Ícone</span>
+        <span className={styles.label} id="category-icon-label">
+          Ícone
+        </span>
         <div className={styles.iconGrid} role="radiogroup" aria-labelledby="category-icon-label">
-          {ICON_OPTIONS.map(option => (
+          {ICON_OPTIONS.map((option) => (
             <button
               key={option}
               type="button"
@@ -114,9 +152,11 @@ export function CategoryForm({ initial, onSubmit, onCancel }: CategoryFormProps)
 
       {/* Cor */}
       <div className={styles.field}>
-        <span className={styles.label} id="category-color-label">Cor</span>
+        <span className={styles.label} id="category-color-label">
+          Cor
+        </span>
         <div className={styles.colorGrid} role="radiogroup" aria-labelledby="category-color-label">
-          {COLOR_OPTIONS.map(option => (
+          {COLOR_OPTIONS.map((option) => (
             <button
               key={option}
               type="button"
@@ -135,13 +175,17 @@ export function CategoryForm({ initial, onSubmit, onCancel }: CategoryFormProps)
       <div className={styles.preview}>
         <span className={styles.previewLabel}>Pré-visualização</span>
         <div className={styles.previewItem}>
-          <div className={styles.previewIcon} style={{ background: `${color}20` }}>{icon}</div>
+          <div className={styles.previewIcon} style={{ background: `${color}20` }}>
+            {icon}
+          </div>
           <p className={styles.previewName}>{name.trim() || 'Nome da categoria'}</p>
         </div>
       </div>
 
       {error && (
-        <p className={styles.error} role="alert">{error}</p>
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
       )}
 
       <div className={styles.actions}>

@@ -137,7 +137,7 @@ describe('projectMonthlyTotals', () => {
         tx({ amount: 100, type: 'income', date: '2026-09-05' }),
         tx({ amount: 40, type: 'expense', date: '2026-09-20' }),
       ],
-      months
+      months,
     )
 
     expect(result).toEqual([

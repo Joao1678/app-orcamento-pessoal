@@ -1,8 +1,6 @@
 'use client'
 
-import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
-} from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import type { MonthlyChartData } from '@/types/database'
 import { formatCurrency } from '@/lib/utils/formatCurrency'
 import styles from './MonthlyChart.module.css'
@@ -11,13 +9,27 @@ interface MonthlyChartProps {
   data: MonthlyChartData[]
 }
 
-function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: { value: number; dataKey: string }[]; label?: string }) {
+function CustomTooltip({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean
+  payload?: { value: number; dataKey: string }[]
+  label?: string
+}) {
   if (!active || !payload?.length) return null
   return (
     <div className={styles.tooltip}>
       <p className={styles.tooltipMonth}>{label}</p>
       {payload.map((p) => (
-        <p key={p.dataKey} style={{ color: p.dataKey === 'income' ? 'var(--color-income-light)' : 'var(--color-expense-light)' }}>
+        <p
+          key={p.dataKey}
+          style={{
+            color:
+              p.dataKey === 'income' ? 'var(--color-income-light)' : 'var(--color-expense-light)',
+          }}
+        >
           {p.dataKey === 'income' ? '↑ Receitas' : '↓ Despesas'}: {formatCurrency(p.value)}
         </p>
       ))}
@@ -45,11 +57,7 @@ export function MonthlyChart({ data }: MonthlyChartProps) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={data} barGap={4} barCategoryGap="30%">
-        <CartesianGrid
-          strokeDasharray="3 3"
-          stroke="rgba(255,255,255,0.05)"
-          vertical={false}
-        />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
         <XAxis
           dataKey="month"
           tick={{ fill: 'var(--text-tertiary)', fontSize: 12 }}

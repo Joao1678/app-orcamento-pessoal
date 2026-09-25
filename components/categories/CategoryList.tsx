@@ -34,15 +34,17 @@ export function CategoryList({ categories, onEdit, onDelete }: CategoryListProps
   return (
     <>
       <div className={styles.groups}>
-        {SECTIONS.map(section => {
-          const items = categories.filter(c => c.type === section.type)
+        {SECTIONS.map((section) => {
+          const items = categories.filter((c) => c.type === section.type)
           if (items.length === 0) return null
 
           return (
             <div key={section.type} className={styles.group}>
-              <p className={styles.groupHeader} data-type={section.type}>{section.label}</p>
+              <p className={styles.groupHeader} data-type={section.type}>
+                {section.label}
+              </p>
               <ul className={styles.list}>
-                {items.map(category => (
+                {items.map((category) => (
                   <CategoryItem
                     key={category.id}
                     category={category}

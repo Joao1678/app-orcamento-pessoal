@@ -36,12 +36,15 @@ export function ProfileInfo({
   const [newEmail, setNewEmail] = useState('')
 
   const [nameStatus, setNameStatus] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null)
-  const [emailStatus, setEmailStatus] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null)
+  const [emailStatus, setEmailStatus] = useState<{ kind: 'ok' | 'error'; text: string } | null>(
+    null,
+  )
   const [savingName, setSavingName] = useState(false)
   const [savingEmail, setSavingEmail] = useState(false)
 
   const nameChanged = name.trim() !== (fullName ?? '')
-  const emailChanged = newEmail.trim() !== '' && newEmail.trim().toLowerCase() !== (email ?? '').toLowerCase()
+  const emailChanged =
+    newEmail.trim() !== '' && newEmail.trim().toLowerCase() !== (email ?? '').toLowerCase()
 
   async function handleSaveName(e: React.FormEvent) {
     e.preventDefault()
@@ -89,7 +92,7 @@ export function ProfileInfo({
               kind: 'ok',
               text: 'Enviamos um link de confirmação para o novo e-mail. A troca vale depois de você abri-lo.',
             }
-          : { kind: 'ok', text: 'E-mail atualizado.' }
+          : { kind: 'ok', text: 'E-mail atualizado.' },
       )
     } catch (err: unknown) {
       setEmailStatus({
@@ -136,8 +139,8 @@ export function ProfileInfo({
             disabled
           />
           <p className={styles.hint}>
-            O e-mail faz parte da sua conta. Trocá-lo não cria uma conta nova:
-            seu id, transações, categorias e perfil permanecem os mesmos.
+            O e-mail faz parte da sua conta. Trocá-lo não cria uma conta nova: seu id, transações,
+            categorias e perfil permanecem os mesmos.
           </p>
         </div>
 

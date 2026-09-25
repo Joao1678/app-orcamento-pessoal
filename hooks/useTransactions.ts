@@ -50,11 +50,17 @@ export function useTransactions(options: UseTransactionsOptions = {}) {
     setLoading(false)
   }, [options.month, options.type, options.categoryId, options.limit])
 
-  useEffect(() => { fetch() }, [fetch])
+  useEffect(() => {
+    fetch()
+  }, [fetch])
 
-  async function createTransaction(payload: Omit<Transaction, 'id' | 'user_id' | 'created_at' | 'category'>) {
+  async function createTransaction(
+    payload: Omit<Transaction, 'id' | 'user_id' | 'created_at' | 'category'>,
+  ) {
     const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
     if (!user) throw new Error('Não autenticado')
 
     const { error } = await supabase.from('transactions').insert({ ...payload, user_id: user.id })
@@ -62,7 +68,10 @@ export function useTransactions(options: UseTransactionsOptions = {}) {
     await fetch()
   }
 
-  async function updateTransaction(id: string, payload: Partial<Omit<Transaction, 'id' | 'user_id' | 'created_at' | 'category'>>) {
+  async function updateTransaction(
+    id: string,
+    payload: Partial<Omit<Transaction, 'id' | 'user_id' | 'created_at' | 'category'>>,
+  ) {
     const supabase = createClient()
     const { error } = await supabase.from('transactions').update(payload).eq('id', id)
     if (error) throw error
@@ -76,5 +85,13 @@ export function useTransactions(options: UseTransactionsOptions = {}) {
     await fetch()
   }
 
-  return { transactions, loading, error, refetch: fetch, createTransaction, updateTransaction, deleteTransaction }
+  return {
+    transactions,
+    loading,
+    error,
+    refetch: fetch,
+    createTransaction,
+    updateTransaction,
+    deleteTransaction,
+  }
 }

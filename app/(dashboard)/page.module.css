@@ -53,8 +53,12 @@
   font-size: var(--font-size-xs);
 }
 
-.legendIncome  { color: var(--color-income-light); }
-.legendExpense { color: var(--color-expense-light); }
+.legendIncome {
+  color: var(--color-income-light);
+}
+.legendExpense {
+  color: var(--color-expense-light);
+}
 
 /* Responsivo */
 @media (max-width: 1024px) {

@@ -4,13 +4,11 @@ import { Sidebar } from '@/components/layout/Sidebar'
 import { resolveAvatarView } from '@/lib/avatar'
 import styles from './layout.module.css'
 
-export default async function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   if (!user) redirect('/login')
 
@@ -27,9 +25,7 @@ export default async function DashboardLayout({
         userName={profile?.full_name ?? undefined}
         avatar={resolveAvatarView(profile?.avatar_url)}
       />
-      <main className={styles.main}>
-        {children}
-      </main>
+      <main className={styles.main}>{children}</main>
     </div>
   )
 }

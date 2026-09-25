@@ -76,13 +76,13 @@
   color: var(--text-tertiary);
 }
 
-.stepItem[data-state="current"] {
+.stepItem[data-state='current'] {
   background: rgba(239, 68, 68, 0.16);
   color: var(--color-expense-light);
   font-weight: 600;
 }
 
-.stepItem[data-state="done"] {
+.stepItem[data-state='done'] {
   color: var(--color-income-light);
 }
 
@@ -99,12 +99,12 @@
   flex-shrink: 0;
 }
 
-.stepItem[data-state="current"] .stepDot {
+.stepItem[data-state='current'] .stepDot {
   background: var(--color-expense);
   color: #fff;
 }
 
-.stepItem[data-state="done"] .stepDot {
+.stepItem[data-state='done'] .stepDot {
   background: var(--color-income);
   color: #fff;
 }

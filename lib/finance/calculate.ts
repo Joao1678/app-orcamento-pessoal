@@ -36,7 +36,7 @@ export function toDecimal(value: Transaction['amount'] | string | number): Decim
  */
 export function sumByType(
   transactions: Pick<Transaction, 'amount' | 'type'>[],
-  type: TransactionType
+  type: TransactionType,
 ): Decimal {
   return transactions
     .filter((tx) => tx.type === type)
@@ -46,11 +46,9 @@ export function sumByType(
 /** Saldo = receitas − despesas. O sinal vem do `type`, nunca do valor. */
 export function calculateBalance(
   income: Decimal | number | string,
-  expense: Decimal | number | string
+  expense: Decimal | number | string,
 ): Decimal {
-  return new MONEY_PRECISION(income as never).minus(
-    new MONEY_PRECISION(expense as never)
-  )
+  return new MONEY_PRECISION(income as never).minus(new MONEY_PRECISION(expense as never))
 }
 
 /**
@@ -62,12 +60,8 @@ export function calculateBalance(
  * `percentage` é calculado sobre o total de despesas do período. Quando não
  * há despesa alguma, evita divisão por zero e devolve 0.
  */
-export function summarizeByCategory(
-  transactions: Transaction[]
-): CategorySpending[] {
-  const expenses = transactions.filter(
-    (tx) => tx.type === 'expense' && tx.category
-  )
+export function summarizeByCategory(transactions: Transaction[]): CategorySpending[] {
+  const expenses = transactions.filter((tx) => tx.type === 'expense' && tx.category)
 
   const totals = new Map<string, { category: Category; total: Decimal }>()
   for (const tx of expenses) {
@@ -84,7 +78,7 @@ export function summarizeByCategory(
 
   const grandTotal = [...totals.values()].reduce(
     (sum, item) => sum.plus(item.total),
-    new MONEY_PRECISION(0)
+    new MONEY_PRECISION(0),
   )
 
   return [...totals.values()]
@@ -108,12 +102,10 @@ export function summarizeByCategory(
  */
 export function projectMonthlyTotals(
   transactions: Pick<Transaction, 'amount' | 'type' | 'date'>[],
-  months: { label: string; start: string; end: string }[]
+  months: { label: string; start: string; end: string }[],
 ): MonthlyChartData[] {
   return months.map((month) => {
-    const inMonth = transactions.filter(
-      (tx) => tx.date >= month.start && tx.date <= month.end
-    )
+    const inMonth = transactions.filter((tx) => tx.date >= month.start && tx.date <= month.end)
     return {
       month: month.label,
       income: sumByType(inMonth, 'income').toDecimalPlaces(2).toNumber(),
@@ -123,9 +115,12 @@ export function projectMonthlyTotals(
 }
 
 /** Resumo do período, usado nos cards do topo do dashboard. */
-export function summarizePeriod(
-  transactions: Pick<Transaction, 'amount' | 'type'>[]
-): { income: number; expense: number; balance: number; transactionCount: number } {
+export function summarizePeriod(transactions: Pick<Transaction, 'amount' | 'type'>[]): {
+  income: number
+  expense: number
+  balance: number
+  transactionCount: number
+} {
   const income = sumByType(transactions, 'income')
   const expense = sumByType(transactions, 'expense')
 

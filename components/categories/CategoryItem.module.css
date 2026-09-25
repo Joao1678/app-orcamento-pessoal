@@ -6,7 +6,9 @@
   border-radius: var(--radius-md);
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
   animation: fadeIn 0.3s ease both;
 }
 
@@ -45,8 +47,12 @@
   margin-top: 2px;
 }
 
-.type[data-type="income"]  { color: var(--color-income-light); }
-.type[data-type="expense"] { color: var(--color-expense-light); }
+.type[data-type='income'] {
+  color: var(--color-income-light);
+}
+.type[data-type='expense'] {
+  color: var(--color-expense-light);
+}
 
 .actions {
   display: flex;
@@ -101,5 +107,18 @@
   }
 }
 
-@keyframes spin   { to { transform: rotate(360deg); } }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

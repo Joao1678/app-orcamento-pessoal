@@ -15,13 +15,7 @@ interface AvatarPickerProps {
   onClear: () => Promise<unknown>
 }
 
-export function AvatarPicker({
-  avatar,
-  name,
-  email,
-  onSelectPreset,
-  onClear,
-}: AvatarPickerProps) {
+export function AvatarPicker({ avatar, name, email, onSelectPreset, onClear }: AvatarPickerProps) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
 
@@ -31,9 +25,7 @@ export function AvatarPicker({
     try {
       await action()
     } catch (err: unknown) {
-      setError(
-        err instanceof Error ? err.message : 'Não foi possível atualizar o avatar.'
-      )
+      setError(err instanceof Error ? err.message : 'Não foi possível atualizar o avatar.')
     } finally {
       setBusy(false)
     }
@@ -52,20 +44,17 @@ export function AvatarPicker({
         <div className={styles.previewText}>
           <p className={styles.previewTitle}>Avatar do perfil</p>
           <p className={styles.previewHint}>
-            Escolha um dos avatares abaixo. Ele aparece no menu lateral, ao lado
-            do seu nome.
+            Escolha um dos avatares abaixo. Ele aparece no menu lateral, ao lado do seu nome.
           </p>
         </div>
       </div>
 
       <div className={styles.section}>
-        <p className={styles.sectionLabel} id="avatar-presets-label">Avatares</p>
-        <div
-          className={styles.presetGrid}
-          role="radiogroup"
-          aria-labelledby="avatar-presets-label"
-        >
-          {AVATAR_PRESETS.map(preset => {
+        <p className={styles.sectionLabel} id="avatar-presets-label">
+          Avatares
+        </p>
+        <div className={styles.presetGrid} role="radiogroup" aria-labelledby="avatar-presets-label">
+          {AVATAR_PRESETS.map((preset) => {
             const selected = avatar.emoji === preset.emoji
             return (
               <button
@@ -91,12 +80,7 @@ export function AvatarPicker({
 
       {avatar.emoji && (
         <div>
-          <Button
-            type="button"
-            variant="ghost"
-            loading={busy}
-            onClick={() => void run(onClear)}
-          >
+          <Button type="button" variant="ghost" loading={busy} onClick={() => void run(onClear)}>
             Usar iniciais do nome
           </Button>
         </div>

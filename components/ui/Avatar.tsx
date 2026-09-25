@@ -27,14 +27,7 @@ function initialsFrom(name?: string, email?: string): string {
   return email?.[0]?.toUpperCase() ?? 'U'
 }
 
-export function Avatar({
-  emoji,
-  color,
-  name,
-  email,
-  size = 36,
-  className = '',
-}: AvatarProps) {
+export function Avatar({ emoji, color, name, email, size = 36, className = '' }: AvatarProps) {
   const dimension = {
     width: size,
     height: size,
