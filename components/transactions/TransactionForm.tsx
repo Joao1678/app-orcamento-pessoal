@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Decimal from 'decimal.js'
 import type { Transaction, Category, TransactionType } from '@/types/database'
+import { toDecimal } from '@/lib/finance/calculate'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { getTodayISO } from '@/lib/utils/dateUtils'
@@ -34,17 +36,27 @@ export function TransactionForm({ categories, initial, onSubmit, onCancel }: Tra
     e.preventDefault()
     setError('')
 
-    const parsedAmount = parseFloat(amount.replace(',', '.'))
-    if (!parsedAmount || parsedAmount <= 0) {
+    const trimmedAmount = amount.trim().replace(',', '.')
+    let dec: Decimal
+    try {
+      dec = toDecimal(trimmedAmount)
+    } catch {
       setError('Informe um valor válido.')
       return
     }
+
+    if (dec.isNaN() || !dec.isFinite() || dec.lte(0)) {
+      setError('Informe um valor maior que zero.')
+      return
+    }
+
+    const validatedAmount = dec.toDecimalPlaces(2, Decimal.ROUND_HALF_UP).toNumber()
 
     setLoading(true)
     try {
       await onSubmit({
         type,
-        amount: parsedAmount,
+        amount: validatedAmount,
         description: description || null,
         date,
         category_id: categoryId || null,

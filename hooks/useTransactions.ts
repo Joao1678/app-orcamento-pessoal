@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { friendlyErrorMessage } from '@/lib/supabase/errors'
 import type { Transaction } from '@/types/database'
-import { getCurrentMonthRange } from '@/lib/utils/dateUtils'
+import { getCurrentMonthRange, getMonthRange } from '@/lib/utils/dateUtils'
 
 interface UseTransactionsOptions {
   month?: string // 'YYYY-MM'
@@ -29,15 +29,8 @@ export function useTransactions(options: UseTransactionsOptions = {}) {
       .order('date', { ascending: false })
       .order('created_at', { ascending: false })
 
-    if (options.month) {
-      const [year, month] = options.month.split('-').map(Number)
-      const start = new Date(year, month - 1, 1).toISOString().split('T')[0]
-      const end = new Date(year, month, 0).toISOString().split('T')[0]
-      query = query.gte('date', start).lte('date', end)
-    } else {
-      const { start, end } = getCurrentMonthRange()
-      query = query.gte('date', start).lte('date', end)
-    }
+    const { start, end } = options.month ? getMonthRange(options.month) : getCurrentMonthRange()
+    query = query.gte('date', start).lte('date', end)
 
     if (options.type) query = query.eq('type', options.type)
     if (options.categoryId) query = query.eq('category_id', options.categoryId)
